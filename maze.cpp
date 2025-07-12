@@ -69,36 +69,6 @@ void drawMaze(Player& player) {
     glEnd();
 }
 
-void updatePlayer(Player& player, GLFWwindow* window) {
-    float moveSpeed = player.speed;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        player.x += cosf(radians(player.yaw)) * moveSpeed;
-        player.z += sinf(radians(player.yaw)) * moveSpeed;
-    }
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        player.x -= cosf(radians(player.yaw)) * moveSpeed;
-        player.z -= sinf(radians(player.yaw)) * moveSpeed;
-    }
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        player.x -= cosf(radians(player.yaw + 90)) * moveSpeed;
-        player.z -= sinf(radians(player.yaw + 90)) * moveSpeed;
-    }
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        player.x += cosf(radians(player.yaw + 90)) * moveSpeed;
-        player.z += sinf(radians(player.yaw + 90)) * moveSpeed;
-    }
-    
-    int cellX = static_cast<int>(player.x / 4.0f);
-    int cellZ = static_cast<int>(-player.z / 4.0f);
-    
-    if (cellX >= 0 && cellX < MAZE_SIZE && cellZ >= 0 && cellZ < MAZE_SIZE) {
-        if (maze[cellZ][cellX] == 1) {
-            player.x -= cosf(radians(player.yaw)) * moveSpeed * 2.0f;
-            player.z -= sinf(radians(player.yaw)) * moveSpeed * 2.0f;
-        }
-    }
-}
-
 void setupLighting(Player& player) {
     GLfloat lightPos[] = {player.x, player.y + 1.0f, player.z, 1.0f};
     GLfloat lightDir[] = {
